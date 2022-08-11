@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,14 @@ export class AuthenticationService {
     return this._isAuthenticated;
   }
 
+  /**
+   * Method to know if the user has authentication info so we can check its status then
+   * @returns Boolean that inicates if there is a token and user information
+   */
+  public hasAuthInformation() {
+    return this._accessToken && this._userInformation;
+  }
+
   public getUserInfo() {
     return this._userInformation;
   }
@@ -49,6 +58,14 @@ export class AuthenticationService {
    * @returns Observable of the user login endpoint call 
    */
   public login(userName: string, password: string) {
+
+  }
+
+  /**
+   * Method to call API to check auth status
+   * @returns Observable of the status API call
+   */
+  public checkAuthenticationStatus() {
 
   }
 }

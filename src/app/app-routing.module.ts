@@ -8,6 +8,7 @@ import { CartComponent } from './pages/cart/cart.component';
 import { ConfirmationComponent } from './pages/confirmation/confirmation.component';
 import { OrdersListComponent } from './pages/orders-list/orders-list.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,40 +17,49 @@ const routes: Routes = [
   },
   {
     path: 'productos/:filtros',
-    component: ProductsListComponent
+    component: ProductsListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'producto/:id',
-    component: ProductDetailComponent
+    component: ProductDetailComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'perfil',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'carro',
-    component: CartComponent
+    component: CartComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'pedido-confirmacion',
-    component: ConfirmationComponent
+    component: ConfirmationComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'pedidos',
-    component: OrdersListComponent
+    component: OrdersListComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'pedido/:id',
-    component: OrderDetailComponent
+    component: OrderDetailComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '',
-    component: ProductsListComponent
+    component: ProductsListComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
+  providers: [AuthGuard],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
