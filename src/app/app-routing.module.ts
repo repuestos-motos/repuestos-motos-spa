@@ -35,7 +35,7 @@ const routes: Routes = [
     component: ConfirmationComponent
   },
   {
-    path: 'pedidos/listado',
+    path: 'pedidos',
     component: OrdersListComponent
   },
   {
