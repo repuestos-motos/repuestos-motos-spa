@@ -15,6 +15,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+import { SellerLoginComponent } from './pages/seller-login/seller-login.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AuthenticationInterceptor } from './interceptors/authentication.interce
     OrdersListComponent,
     OrderDetailComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    SellerLoginComponent
   ],
   imports: [
     BrowserModule,
