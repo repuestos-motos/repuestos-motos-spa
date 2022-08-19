@@ -9,8 +9,13 @@ import { ConfirmationComponent } from './pages/confirmation/confirmation.compone
 import { OrdersListComponent } from './pages/orders-list/orders-list.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { AuthGuard } from './guards/auth.guard';
+import { SellerLoginComponent } from './pages/seller-login/seller-login.component';
 
 const routes: Routes = [
+  {
+    path: 'login-vendedor',
+    component: SellerLoginComponent
+  },
   {
     path: 'login',
     component: LoginComponent
