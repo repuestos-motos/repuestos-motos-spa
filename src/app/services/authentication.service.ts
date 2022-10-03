@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { map } from 'rxjs';
+import { ApiService } from './api.service';
+import { User } from '../interface/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthenticationService {
-
   /**
    * JWT to access API resources
    */
@@ -17,26 +18,74 @@ export class AuthenticationService {
   private _isAuthenticated: boolean = false;
 
   /**
-   * Object that contains the user information 
+   * Key to store the user information in local storage
    */
-  private _userInformation: any = null;
+  private _localStorageKey: string = 'userInfo';
 
-  constructor() { }
+  /**
+   * Object that contains the user information
+   */
+  private _userInformation: User;
+
+  constructor(private apiService: ApiService) {
+    this.loadStoredUserInformation();
+  }
+
+  loadStoredUserInformation() {
+    const lsValue = localStorage.getItem(this._localStorageKey);
+    if (lsValue) {
+      const value = JSON.parse(decodeURIComponent(window.atob(lsValue)));
+      this._accessToken = value.accessToken;
+      this._userInformation = value.userInformation as User;
+      this._isAuthenticated = this._accessToken ? true : false;
+    }
+  }
+
+  storeUserInformation() {
+    if (this.isAuthenticated()) {
+      const value = window.btoa(
+        encodeURIComponent(
+          JSON.stringify(
+            {
+              userInformation: this._userInformation,
+              accessToken: this._accessToken
+            }
+          )
+        )
+      );
+      localStorage.setItem(this._localStorageKey, value);
+    }
+  }
 
   /**
    * Method to get the current access token
    * @returns string with the current access token
    */
-  public getAccessToken() {
+  public getAccessToken(): string {
     return this._accessToken;
   }
 
   /**
-   * Method to know if the user has logged in
+   * Method to get the current access token
+   * @returns string with the current access token
+   */
+  public setAccessToken(token: string | null) {
+    this._accessToken = token || '';
+    this.storeUserInformation();
+  }
+
+  /**
    * @returns boolean indicating wheter the user is autenticated
    */
-  public isAuthenticated() {
+  public isAuthenticated(): boolean {
     return this._isAuthenticated;
+  }
+
+  /**
+   * @returns Boolean indicanting if the user is seller or not
+   */
+  public isSeller(): boolean {
+    return this._userInformation.isSeller;
   }
 
   /**
@@ -47,7 +96,7 @@ export class AuthenticationService {
     return this._accessToken && this._userInformation;
   }
 
-  public getUserInfo() {
+  public getUserInfo(): User {
     return this._userInformation;
   }
 
@@ -55,17 +104,24 @@ export class AuthenticationService {
    * Method to call the login endpoint
    * @param userName User name
    * @param password Password
-   * @returns Observable of the user login endpoint call 
+   * @returns Observable of the user login endpoint call
    */
   public login(userName: string, password: string) {
-
+    return this.apiService
+      .post('authentication/login', { userName, password })
+      .pipe(
+        map((response: any) => {
+          this._isAuthenticated = true;
+          this._userInformation = response as User;
+          this.storeUserInformation();
+          return response;
+        })
+      );
   }
 
   /**
    * Method to call API to check auth status
    * @returns Observable of the status API call
    */
-  public checkAuthenticationStatus() {
-
-  }
+  public checkAuthenticationStatus() {}
 }

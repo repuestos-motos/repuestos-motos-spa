@@ -1,1 +1,52 @@
-<p>cart works!</p>
+<div class="container white-box-container mt-2">
+  <div class="row mb-2">
+    <div class="col-12">
+      <h2>Pedido actual</h2>
+      <p>
+        Estos son los productos que están listos para realizar un nuevo pedido.
+      </p>
+    </div>
+  </div>
+  <div class="row" *ngIf="this.cartItems.length === 0">
+    <div class="col-12 text-center">
+        <span class="text-muted">Aún no hay productos en su pedido actual.</span>
+    </div>
+  </div>
+  <div *ngFor="let item of this.cartItems; let i = index;" class="row cart-item">
+    <div class="col-8">
+      <h3 class="title">
+        {{ item.description }} <span> x {{ item.quantity }}</span>
+      </h3>
+      <span>Precio unitario: {{ item.price | currency }}</span>
+    </div>
+    <div class="col-4 text-end">
+      <div>
+        <span class="title">{{ item.quantity * item.price | currency }}</span>
+      </div>
+      <div>
+        <button class="btn-red" (click)="this.removeItem(item)">Quitar</button>
+      </div>
+    </div>
+    <div class="col-12 border-bottom my-2 item-end" *ngIf="this.cartItems.length !== (i + 1)"></div>
+  </div>
+</div>
+<div class="cart-footer-height"></div>
+<div class="cart-footer" *ngIf="this.totalAmount > 0">
+    <div class="container white-box-container">
+        <div class="row">
+            <div class="col-8">
+                <span class="title">Total</span>
+            </div>
+            <div class="col-4 text-end">
+                <span class="title">
+                    {{ this.totalAmount | currency }}
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 text-end">
+                <button class="btn-red btn-confirm" (click)="this.confirmOrder()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

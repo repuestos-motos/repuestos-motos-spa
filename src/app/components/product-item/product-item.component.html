@@ -1,0 +1,40 @@
+<div class="product-item white-box-container mt-2">
+  <img
+    *ngIf="!this.product.hasImage"
+    src="../../../assets/sample-product.PNG"
+    alt=""
+  />
+  <img *ngIf="this.product.hasImage" [src]="this.getImageUrl()" alt="" />
+  <div class="down-content">
+    <h3>{{ this.product.title }}</h3>
+    <p class="price text-end">{{ this.product.price | currency }}</p>
+    <ul>
+      <li *ngIf="this.product.brandName">{{ this.product.brandName }}</li>
+      <li *ngIf="this.product.category">{{ this.product.category }}</li>
+      <li *ngIf="this.product.description">{{ this.product.description }}</li>
+    </ul>
+    <div class="item-quantity-box">
+      <button
+        class="quantity-button left"
+        (click)="this.substractButtonClick()"
+      >
+        -
+      </button>
+      <input
+        type="text"
+        class="item-quantity"
+        disabled=""
+        [(ngModel)]="this.quantityToAdd"
+      />
+      <button class="quantity-button right" (click)="this.addButtonClick()">
+        +
+      </button>
+    </div>
+    <div class="text-center" *ngIf="(this.quantityToAdd + this.product.quantityAdded) === this.product.currentStock">
+        <span class="text-danger text-center">Ya no hay más unidades disponibles de este producto.</span>
+    </div>
+    <div class="text-center">
+      <button class="add-to-cart-button mt-2" (click)="this.addToCart()">Agregar al pedido</button>
+    </div>
+  </div>
+</div>

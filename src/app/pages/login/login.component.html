@@ -1,15 +1,43 @@
 <div class="container mt-3">
-    <h3> Inicio de sesion</h3>
-    <p>Ingrese con su usuario y contraseña para poder realizar pedidos</p>
-    <form>   
-        <div class="mb-3" >
-          <label for="exampleInputEmail1" class="form-label">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <button type="submit" class="btn btn-primary">Ingresar</button>
-      </form>
+  <div class="row align-items-center flex-column">
+    <div class="col-12 text-center">
+      <h3>Inicio de sesion</h3>
+      <p style="max-width: 250px; display: inline-block;">Ingrese con su usuario y contraseña para poder realizar pedidos</p>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="mb-3">
+        <label for="userName">Nombre de usuario</label>
+        <input
+          type="text"
+          class="form-control"
+          id="userName"
+          [(ngModel)]="this.userName"
+        />
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="mb-3">
+        <label for="password">Contraseña</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          [(ngModel)]="this.password"
+        />
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <p class="text-center text-danger" *ngIf="this.loginError">
+        Usuario y contraseña no válidos.
+      </p>
+      <p class="text-center text-danger" *ngIf="this.generalError">
+        Ocurrió un error al intentar iniciar sesión, por favor vuelva a intentarlo luego.
+      </p>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <div class="text-center">
+        <button class="btn btn-primary" (click)="this.login()">Ingresar</button>
+      </div>
+    </div>
+  </div>
 </div>

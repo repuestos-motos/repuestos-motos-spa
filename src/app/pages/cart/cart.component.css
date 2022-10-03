@@ -1,0 +1,27 @@
+.cart-item .title, .cart-footer .title {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.cart-item .item-end {
+    width: 95%;
+    margin: auto;
+}
+
+.cart-footer-height {
+    padding-bottom: 100px;
+}
+
+.cart-footer {
+    height: 80px;
+    position: absolute;
+    padding-top: 5px;
+    left: 0;
+    right: 0;
+    bottom: 65px;
+}
+
+.cart-footer .btn-confirm {
+    margin-top: 5px;
+    margin-left: 5px;
+}

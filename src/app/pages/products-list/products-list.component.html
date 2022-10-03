@@ -1,1 +1,17 @@
-<p>products-list works!</p>
+<div class="container products">
+  <div class="row">
+    <div class="filters">
+      <ul>
+        <li class="unselectable" [ngClass]="{'active': this.selectedCategory === null}" (click)="this.clearCategory()">Ver todos</li>
+        <li *ngFor="let c of this.productsCategories" class="unselectable" [ngClass]="{'active': this.selectedCategory?.name === c.name}" (click)="this.selectCategory(c)">
+          {{ c.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div *ngFor="let p of this.productList" class="col-lg-4 col-md-4 all des" [ngClass]="{'d-none': this.hideProduct(p)}">
+      <app-product-item [product]="p"></app-product-item>
+    </div>
+  </div>
+</div>

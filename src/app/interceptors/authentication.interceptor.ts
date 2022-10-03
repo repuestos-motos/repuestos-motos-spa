@@ -3,9 +3,10 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
@@ -14,13 +15,20 @@ export class AuthenticationInterceptor implements HttpInterceptor {
   constructor(private authService: AuthenticationService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(this.addAutenticationHeader(request));
+    return next.handle(this.addAutenticationHeader(request)).pipe(
+      map((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          this.authService.setAccessToken(event.headers.get('Authorization'));
+        }
+        return event;
+      })
+    );
   }
 
   addAutenticationHeader(request: HttpRequest<unknown>) {
     return request.clone({
       setHeaders: {
-        Authorization: `BAERER ${this.authService.getAccessToken()}`
+        Authorization: `${this.authService.getAccessToken()}`
       } 
     });
   }

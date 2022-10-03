@@ -1,1 +1,26 @@
-<p>profile works!</p>
+<div class="container white-box-container mt-2">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="title">Perfil de usuario</h2>
+            <p></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <ul>
+                <li>
+                    <strong>Nombre: </strong><span>{{ this.user.name }}</span>
+                </li>
+                <li>
+                    <strong>Domicilio: </strong><span>{{ this.user.address }}</span>
+                </li>
+                <li>
+                    <strong>Teléfono: </strong><span>{{ this.user.tel }}</span>
+                </li>
+                <li>
+                    <strong>Email: </strong><span>{{ this.user.email }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

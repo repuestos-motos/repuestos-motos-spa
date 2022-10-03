@@ -1,7 +1,16 @@
 <div class="page-container">
-    <app-header *ngIf="this.authService.isAuthenticated()"></app-header>
-    <main>
-        <router-outlet></router-outlet>
-    </main>
-    <app-footer *ngIf="this.authService.isAuthenticated()"></app-footer>
+  <app-header></app-header>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <app-footer></app-footer>
+</div>
+<div class="toast-container">
+    <ngb-toast
+      *ngFor="let toast of toastService.toasts"
+      [header]="toast.header"
+      [autohide]="true"
+      [delay]="toast.delay || 5000"
+      >{{ toast.body }}
+    </ngb-toast>
 </div>
