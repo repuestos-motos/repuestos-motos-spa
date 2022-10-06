@@ -29,7 +29,7 @@ export class CartComponent {
   private calcTotalAmount() {
     this.totalAmount = this.cartItems.reduce(
       (t,p) => {
-        return t + (p.price * p.quantity);
+        return t + (p.unitPrice * p.quantity);
       },
       0
     );

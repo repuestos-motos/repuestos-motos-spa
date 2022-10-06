@@ -119,6 +119,11 @@ export class AuthenticationService {
       );
   }
 
+  public logout() {
+    this._isAuthenticated = false;
+    this.setAccessToken(null);
+  }
+
   /**
    * Method to call API to check auth status
    * @returns Observable of the status API call

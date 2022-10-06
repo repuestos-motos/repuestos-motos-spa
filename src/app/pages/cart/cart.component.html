@@ -17,11 +17,11 @@
       <h3 class="title">
         {{ item.description }} <span> x {{ item.quantity }}</span>
       </h3>
-      <span>Precio unitario: {{ item.price | currency }}</span>
+      <span>Precio unitario: {{ item.unitPrice | currency }}</span>
     </div>
     <div class="col-4 text-end">
       <div>
-        <span class="title">{{ item.quantity * item.price | currency }}</span>
+        <span class="title">{{ item.quantity * item.unitPrice | currency }}</span>
       </div>
       <div>
         <button class="btn-red" (click)="this.removeItem(item)">Quitar</button>

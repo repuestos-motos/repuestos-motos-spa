@@ -62,14 +62,14 @@ export class CartService {
       // Item exist -> modify the current reference
       item.quantity += quantity;
       item.description = product.title;
-      item.price = product.price;
+      item.unitPrice = product.price;
       console.info('Current item in cart modified');
       console.info(this.cartItems);
     } else {
       item = {
         productId: product.productId,
         description: product.title,
-        price: product.price,
+        unitPrice: product.price, 
         quantity
       };
       this.cartItems.push(item);

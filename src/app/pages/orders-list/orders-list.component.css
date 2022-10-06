@@ -1,0 +1,35 @@
+.order-item-borders {
+    border: 1px solid #f33f3f;
+    border-radius: 10px 10px;
+}
+
+.pagination {
+    justify-content: center;
+}
+
+.page-link{
+    color: #f33f3f;
+    cursor: pointer;
+}
+
+.active>.page-link {
+    cursor: auto;
+    background-color: #f33f3f;
+    color: black;
+    font-weight: bold;
+}
+
+.disabled>.page-link {
+    color: grey;
+}
+
+@media (max-width: 576px)  {
+    .order-item-borders {
+        border-top: 1px solid #f33f3f;
+        border-right: 1px solid #f33f3f;
+        border-bottom: 1px solid #f33f3f;
+        border-left: 1px solid #f33f3f;
+        padding-bottom: 0px!important;
+        border-radius: 10px 10px;
+    }
+}
