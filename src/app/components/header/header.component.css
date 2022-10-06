@@ -55,7 +55,18 @@ header .navbar {
 	font-style: normal;
 	color: #f33f3f;
 }
+.mobile-navbar-background {
+	background-color: rgba(0,0,0,0.3);
+	position: fixed;
+	z-index: 998;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
 .navbar-collapse {
+	position: relative;
+	z-index: 999;
     background-color: #232323;
 	text-align: center;
 }

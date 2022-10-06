@@ -1,5 +1,6 @@
 <header>
   <nav class="navbar navbar-expand-lg">
+    <div class="mobile-navbar-background" *ngIf="this.showNavbar" (click)="this.navbarBtnClick()"></div>
     <div class="container" [ngClass]="{'justify-content-center': !this.authService.isAuthenticated()}">
       <a class="navbar-brand" href="#"
         ><h2>Moto<em>Landia</em></h2></a
@@ -13,25 +14,26 @@
         aria-expanded="false"
         aria-label="Toggle navigation"
         *ngIf="this.authService.isAuthenticated()"
+        (click)="this.navbarBtnClick()"
       >
         <i class="bi bi-list"></i>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav" *ngIf="this.authService.isAuthenticated()">
+      <div class="collapse navbar-collapse" #navBar id="navbarNav" *ngIf="this.authService.isAuthenticated()">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['']">Productos</a>
+            <a class="nav-link" [routerLink]="['']" (click)="this.navbarBtnClick()">Productos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['carro']">Carro de compras</a>
+            <a class="nav-link" [routerLink]="['carro']" (click)="this.navbarBtnClick()">Carro de compras</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['pedidos']">Mis pedidos</a>
+            <a class="nav-link" [routerLink]="['pedidos']" (click)="this.navbarBtnClick()">Mis pedidos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['perfil']">Perfil</a>
+            <a class="nav-link" [routerLink]="['perfil']" (click)="this.navbarBtnClick()">Perfil</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">Cerrar sesión</a>
+            <a class="nav-link" (click)="this.logout()">Cerrar sesión</a>
           </li>
         </ul>
       </div>

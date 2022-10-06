@@ -57,6 +57,10 @@ export class AuthenticationService {
     }
   }
 
+  removeStoredUserInfromation() {
+    localStorage.clear();
+  }
+
   /**
    * Method to get the current access token
    * @returns string with the current access token
@@ -122,6 +126,7 @@ export class AuthenticationService {
   public logout() {
     this._isAuthenticated = false;
     this.setAccessToken(null);
+    this.removeStoredUserInfromation();
   }
 
   /**
