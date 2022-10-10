@@ -1,15 +1,33 @@
 <div class="container mt-3">
-    <h3>Inicio de sesion</h3>
-    <p>Ingrese su cuenta para poder realizar pedidos a los clientes</p>
-    <form>   
-        <div class="mb-3" >
-          <label for="exampleInputEmail1" class="form-label">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
-        </div>
-        <button type="submit" class="btn btn-primary">Ingresar</button>
-      </form>
+  <h3>Inicio de sesion</h3>
+  <p>Ingrese su cuenta para poder realizar pedidos por los clientes</p>
+  <form>
+    <div class="mb-3">
+      <label for="userName" class="form-label">Usuario</label>
+      <input
+        type="email"
+        class="form-control"
+        name="userName"
+        aria-describedby="Nombre de usuario"
+        [(ngModel)]="this.userName"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        [(ngModel)]="this.password"
+      />
+    </div>
+    <div>
+      <p class="text-danger" *ngIf="this.errorMessage">
+        {{ this.errorMessage }}
+      </p>
+    </div>
+    <button type="submit" class="btn btn-red" (click)="this.login()">
+      Ingresar
+    </button>
+  </form>
 </div>

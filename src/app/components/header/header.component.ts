@@ -17,16 +17,16 @@ export class HeaderComponent implements AfterViewInit {
   }
   
   ngAfterViewInit(): void {
-    console.log('Navbar: ');
-    console.log(this.navBar.nativeElement)
   }
 
   navbarBtnClick() {
     this.showNavbar = !this.showNavbar;
-    if (this.showNavbar) {
-      this.navBar.nativeElement.classList.add('show');
-    } else {
-      this.navBar.nativeElement.classList.remove('show');
+    if (this.navBar) {
+      if (this.showNavbar) {
+        this.navBar.nativeElement.classList.add('show');
+      } else {
+        this.navBar.nativeElement.classList.remove('show');
+      }
     }
   }
 

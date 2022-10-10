@@ -1,6 +1,11 @@
 <div class="page-container">
   <app-header></app-header>
   <main>
+    <div class="preloader-spiner" *ngIf="this.preloader">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <router-outlet></router-outlet>
   </main>
   <app-footer></app-footer>

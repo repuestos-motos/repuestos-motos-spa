@@ -3,6 +3,10 @@
     <div class="col-12">
       <h2>Listado de pedidos</h2>
       <p>Estos son los pedidos que realizó hasta el momento.</p>
+      <select class="form-select mb-3" name="client" *ngIf="this.isSeller" (change)="this.selectedClientChange()" [(ngModel)]="this.clientId">
+        <option [value]="-1" selected>Seleccione un cliente</option>
+        <option *ngFor="let c of this.clientList" [value]="c.clientId">{{ c.name }}</option>
+      </select>
     </div>
     <div class="col-12">
       <div class="container-fluid">

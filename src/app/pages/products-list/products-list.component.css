@@ -1,3 +1,7 @@
+.products {
+	min-height: 50vh;
+}
+
 .products .filters {
 	text-align: center;
 	border-bottom: 1px solid #eee;

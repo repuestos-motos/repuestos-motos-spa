@@ -2,8 +2,13 @@
   <div class="row mb-2">
     <div class="col-12">
       <h2>Pedido actual</h2>
-      <p>
+      <p *ngIf="!this.isSeller">
         Estos son los productos que están listos para realizar un nuevo pedido.
+      </p>
+      <p *ngIf="this.isSeller">
+        Estos son los productos que están listos para realizar un nuevo pedido a nombre del cliente: 
+        <strong *ngIf="this.selectedClient">{{ this.selectedClient.name }}</strong>
+        <strong *ngIf="!this.selectedClient">(cliente no seleccionado)</strong>
       </p>
     </div>
   </div>

@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Order } from '../../interface/order';
 import { AuthenticationService } from '../../services/authentication.service';
 import { OrdersService } from '../../services/orders.service';
+import { Client } from '../../interface/client';
+import { ProductsService } from '../../services/products.service';
+import { PreloaderService } from '../../services/preloader.service';
 
 @Component({
   selector: 'app-orders-list',
@@ -17,22 +20,48 @@ export class OrdersListComponent {
   public currentPage: number = 1;
   public currentPageContent: Order[];
   public itemsPerPage: number = 10;
+  public clientList: Client[] = [];
 
   constructor(
     private auth: AuthenticationService,
+    private productService: ProductsService,
+    private preloader: PreloaderService,
     private ordersSerice: OrdersService
   ) {
     const userInfo = this.auth.getUserInfo();
+    const selectedClient = this.auth.getSelectedClient();
+    this.preloader.block();
+    this.productService.getClientList().subscribe({
+      next: r => {
+        this.clientList = r;
+        this.preloader.unblock();
+      }
+    });
     this.isSeller = this.auth.isSeller();
     if (!this.isSeller) {
       this.clientId = userInfo.id;
+    } else if (selectedClient) {
+      this.clientId = selectedClient.clientId;
     }
+    if (this.clientId >= 0) {
+      this.getOrders();
+    }
+  }
+
+  selectedClientChange() {
+    this.getOrders();
+  }
+
+  getOrders() {
+    this.preloader.block();
     this.ordersSerice.getOrders(this.clientId).subscribe({
       next: (resp: any) => {
         this.orderList = resp.data as Order[];
         this.calculatePages();
         this.fillCurrentPageContent();
-      }
+        this.preloader.unblock();
+      },
+      error: e => this.preloader.unblock()
     });
   }
 
@@ -47,6 +76,7 @@ export class OrdersListComponent {
   }
 
   calculatePages() {
+    this.pages = [];
     const pagesNumber = Math.ceil(this.orderList.length / this.itemsPerPage);
     let i = 0;
     while(i < pagesNumber) {

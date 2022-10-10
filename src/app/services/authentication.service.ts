@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { map } from 'rxjs';
 import { ApiService } from './api.service';
 import { User } from '../interface/user';
+import { Client } from '../interface/client';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +28,11 @@ export class AuthenticationService {
    */
   private _userInformation: User;
 
+  /**
+   * Object that contains the selected client information
+   */
+  private _selectedClient: Client | undefined;
+
   constructor(private apiService: ApiService) {
     this.loadStoredUserInformation();
   }
@@ -37,6 +43,7 @@ export class AuthenticationService {
       const value = JSON.parse(decodeURIComponent(window.atob(lsValue)));
       this._accessToken = value.accessToken;
       this._userInformation = value.userInformation as User;
+      this._selectedClient = value.selectedClient ? value.selectedClient as Client : undefined;
       this._isAuthenticated = this._accessToken ? true : false;
     }
   }
@@ -48,7 +55,8 @@ export class AuthenticationService {
           JSON.stringify(
             {
               userInformation: this._userInformation,
-              accessToken: this._accessToken
+              accessToken: this._accessToken,
+              selectedClient: this._selectedClient
             }
           )
         )
@@ -59,6 +67,15 @@ export class AuthenticationService {
 
   removeStoredUserInfromation() {
     localStorage.clear();
+  }
+
+  public setSelectedClient(client: Client | undefined) {
+    this._selectedClient = client;
+    this.storeUserInformation();
+  }
+
+  public getSelectedClient() {
+    return this._selectedClient;
   }
 
   /**
@@ -113,6 +130,23 @@ export class AuthenticationService {
   public login(userName: string, password: string) {
     return this.apiService
       .post('authentication/login', { userName, password })
+      .pipe(
+        map((response: any) => {
+          this._isAuthenticated = true;
+          this._userInformation = response as User;
+          this.storeUserInformation();
+          return response;
+        })
+      );
+  }
+
+  /**
+   * @param userName 
+   * @param password 
+   */
+  public sellerLogin(userName: string, password: string) {
+    return this.apiService
+      .post('authentication/seller-login', {userName, password})
       .pipe(
         map((response: any) => {
           this._isAuthenticated = true;

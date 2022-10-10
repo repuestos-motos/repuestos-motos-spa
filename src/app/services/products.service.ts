@@ -4,6 +4,8 @@ import { Observable, map, Subject } from 'rxjs';
 import { Category } from '../interface/category';
 import { Product } from '../interface/product';
 import { CartService } from './cart.service';
+import { Client } from '../interface/client';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,7 @@ export class ProductsService {
     this.productListObs = new Subject<Product[]>();
     this.productListObs.subscribe({
       next: r => { this.productList = r }
-    })
+    });
   }
 
   public getCategories(): Observable<Category[]> {
@@ -28,6 +30,16 @@ export class ProductsService {
       map(
         (r: any) => {
           return r.data as Category[];
+        }
+      )
+    );
+  }
+
+  public getClientList(): Observable<Client[]> {
+    return this.api.get('products/client-list').pipe(
+      map(
+        (r: any) => {
+          return r.data as Client[];
         }
       )
     );

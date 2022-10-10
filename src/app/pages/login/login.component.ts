@@ -40,7 +40,6 @@ export class LoginComponent implements OnDestroy {
     this.authService.login(this.userName, this.password).subscribe(
       {
         next: response => {
-          
           this.router.navigate([this.returnUrl]);
         },
         error: response => {
