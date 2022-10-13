@@ -26,7 +26,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
             if (event.status === 403) {
               this.router.navigate(['login']);
             }
-            this.authService.setAccessToken(event.headers.get('Authorization'));
+            this.authService.setAccessToken(event.headers.get('accessToken'));
           }
           return event;
         }
@@ -50,7 +50,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
   addAutenticationHeader(request: HttpRequest<unknown>) {
     return request.clone({
       setHeaders: {
-        Authorization: `${this.authService.getAccessToken()}`
+        accessToken: `${this.authService.getAccessToken()}`
       } 
     });
   }
