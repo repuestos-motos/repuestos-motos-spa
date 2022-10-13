@@ -1,7 +1,7 @@
 <div class="product-item white-box-container mt-2">
   <img
     *ngIf="!this.product.hasImage"
-    src="../../../assets/sample-product.PNG"
+    src="./assets/sample-product.PNG"
     alt=""
   />
   <img *ngIf="this.product.hasImage" [src]="this.getImageUrl()" alt="" />
