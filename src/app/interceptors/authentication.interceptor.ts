@@ -33,13 +33,15 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       ),
       catchError(
         error => {
-          if (error.status === 403) {
+          if (error.status === 401) {
             let queryParams = null;
-            if (this.router.url !== '/login' && this.router.url !== '/' && this.router.url !== '') {
+            const route = this.authService.isSeller() ? '/login-vendedor' : '/login';
+            if (this.router.url !== '/login' && this.router.url !== '/login-vendedor'
+              && this.router.url !== '/' && this.router.url !== '') {
               queryParams = { returnUrl: this.router.url };
             }
             this.authService.logout();
-            this.router.navigate(['/login'], { queryParams });
+            this.router.navigate([route], { queryParams });
           }
           throw error;
         }

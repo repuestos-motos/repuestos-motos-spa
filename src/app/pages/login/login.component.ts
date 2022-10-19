@@ -2,6 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   import { Component, OnDestroy } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Subscription } from 'rxjs';
+import { PreloaderService } from '../../services/preloader.service';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +14,14 @@ export class LoginComponent implements OnDestroy {
   public userName: string = '';
   public password: string = '';
 
-  public loginError: boolean = false;
-  public generalError: boolean = false;
+  public errorMessage: string = '';
   private queryParamsSubs: Subscription;
   private returnUrl: string = '';
 
   constructor(
     private authService: AuthenticationService,
     private activatedRoute: ActivatedRoute,
+    private preloader: PreloaderService,
     private router: Router    
   ) {
     this.queryParamsSubs = this.activatedRoute.queryParams.subscribe({
@@ -35,18 +36,20 @@ export class LoginComponent implements OnDestroy {
   }
 
   login() {
-    this.loginError = false;
-    this.generalError = false;
+    this.errorMessage = '';
+    this.preloader.block();
     this.authService.login(this.userName, this.password).subscribe(
       {
         next: response => {
+          this.preloader.unblock();
           this.router.navigate([this.returnUrl]);
         },
         error: response => {
-          if (response.status === 403) {
-            this.loginError = true;
+          this.preloader.unblock();
+          if (response.status === 400) {
+            this.errorMessage = 'Usuario y/o contraseña incorrectos.';
           } else {
-            this.generalError = true;
+            this.errorMessage = 'Se produjo un error al intentar iniciar sesión.';
           }
           console.error(response);
         }
