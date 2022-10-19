@@ -72,10 +72,16 @@ export class CartComponent {
         this.toastService.add('Pedido', 'Se produjo un error al confirmar su pedido, por favor vuelva a intentarlo luego');
       }
     });
+
+  }
+
+  cancelOrder() {
+    this.clearCart();
   }
   
   removeItem(item: CartItem) {
     this.cartItems = this.cartService.removeItem(item);
+    this.calcTotalAmount();
   }
   
   clearCart() {

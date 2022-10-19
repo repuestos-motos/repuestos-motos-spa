@@ -32,8 +32,13 @@ export class HeaderComponent implements AfterViewInit {
 
   logout() {
     this.navbarBtnClick();
+    const isSeller = this.authService.isSeller();
     this.authService.logout();
-    this.router.navigate(['/login']);
+    if (isSeller) {
+      this.router.navigate(['/login-vendedor']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
 }

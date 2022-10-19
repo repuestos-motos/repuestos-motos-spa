@@ -8,11 +8,24 @@ import { map } from 'rxjs';
 })
 export class OrdersService {
   
-  private states: OrderState[] = [
-    { stateId: 1, description: 'PENDIENTE' }
-  ];
+  private states: OrderState[] = [];
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService) {
+    this.getOrdersStatus().subscribe({
+      next: (r: OrderState[]) => {
+        this.states = r;
+      }
+    });
+  }
+
+  getOrdersStatus() {
+    return this.api.get('orders/status').pipe(
+      map( (r: any) => {
+        this.states = r.data as OrderState[];
+        return r.data;
+      })
+    );
+  }
 
   confirmOrder(order: Order) {
     return this.api.post('orders', {order});
@@ -28,7 +41,7 @@ export class OrdersService {
                 if (state.stateId === order.stateId) {
                   return state.description;
                 }
-                return '';
+                return prevDesc;
               },
               ''
             );

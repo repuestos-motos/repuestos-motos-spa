@@ -45,7 +45,7 @@
             <strong class="text-uppercase">{{ o.state }}</strong>
           </div>
           <div class="col-12 col-sm-2 text-end d-none d-sm-block">
-            <button class="btn-red">Ver</button>
+            <button class="btn-red" [routerLink]="['/pedido', o.orderId]">Ver</button>
           </div>
           <button class="btn-red d-sm-none" [routerLink]="['/pedido', o.orderId]">Ver</button>
         </div>
