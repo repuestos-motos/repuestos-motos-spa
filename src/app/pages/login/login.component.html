@@ -27,11 +27,8 @@
       </div>
     </div>
     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-      <p class="text-center text-danger" *ngIf="this.loginError">
-        Usuario y contraseña no válidos.
-      </p>
-      <p class="text-center text-danger" *ngIf="this.generalError">
-        Ocurrió un error al intentar iniciar sesión, por favor vuelva a intentarlo luego.
+      <p class="text-center text-danger" *ngIf="this.errorMessage">
+        {{ this.errorMessage }}
       </p>
     </div>
     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
