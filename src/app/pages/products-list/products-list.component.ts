@@ -23,6 +23,10 @@ export class ProductsListComponent implements OnInit {
   public selectedCategory: Category | null = null;
   private userInfo: User;
   public isSeller: boolean = false;
+  public productNameSearch: string = '';
+  public productNameFilter: string = '';
+  private timeOut: any;
+  public blockList: boolean = false;
 
   constructor(
     private preloaderService: PreloaderService,
@@ -42,6 +46,18 @@ export class ProductsListComponent implements OnInit {
     } else {
       this.clientUserInit();
     }
+  }
+
+  setNameFilter() {
+    clearTimeout(this.timeOut);
+    this.blockList = true;
+    this.timeOut = setTimeout(
+      () => {
+        this.blockList = false;
+        this.productNameFilter = this.productNameSearch;
+      },
+      500
+    );
   }
 
   sellerUserInit() {
@@ -83,10 +99,10 @@ export class ProductsListComponent implements OnInit {
     this.cartService.clearCartItems();
     const selectedClient = this.clientList.find(c => c.clientId == this.selectedClientId);
     this.authService.setSelectedClient(selectedClient);
-    this.updateProductList(this.selectedClientId);
+    this.updateProductList();
   }
 
-  private updateProductList(clientId: number) {
+  private updateProductList() {
     this.preloaderService.block();
     this.productList = [];
     this.productsService.getProducts(this.selectedClientId).subscribe({
@@ -109,7 +125,14 @@ export class ProductsListComponent implements OnInit {
   }
 
   hideProduct(product: Product) {
-    return this.selectedCategory && product.category != this.selectedCategory.name;
+    if (this.selectedCategory && product.category != this.selectedCategory.name) {
+      return true;
+    }
+    if (this.productNameFilter
+        && !product.title.toUpperCase().includes(this.productNameFilter.toUpperCase())) {
+      return true;
+    }
+    return false;
   }
 
 }

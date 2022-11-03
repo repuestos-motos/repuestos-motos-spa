@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 
@@ -7,18 +7,13 @@ import { AuthenticationService } from '../../services/authentication.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements AfterViewInit {
+export class HeaderComponent {
 
   @ViewChild('navBar') navBar: ElementRef;
 
   public showNavbar: boolean = false;
-  public userName: string = '';
 
   constructor(private router: Router, public authService: AuthenticationService) {
-    this.userName = this.authService.getUserInfo().name;
-  }
-  
-  ngAfterViewInit(): void {
   }
 
   navbarBtnClick() {

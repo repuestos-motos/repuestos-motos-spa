@@ -18,8 +18,12 @@
         </ul>
       </div>
     </div>
+    <div class="col-12 mt-2 mb-4">
+      <input type="text" class="form-control" placeholder="Filtrar por nombre de producto" [(ngModel)]="this.productNameSearch" (keyup)="this.setNameFilter()">
+    </div>
   </div>
-  <div class="row mb-3" >
+  <div class="row position-relative mb-3">
+    <div class="product-list-spinner" *ngIf="this.blockList"></div>
     <div *ngFor="let p of this.productList" class="col-lg-4 col-md-4 all des" [ngClass]="{'d-none': this.hideProduct(p)}">
       <app-product-item [product]="p"></app-product-item>
     </div>

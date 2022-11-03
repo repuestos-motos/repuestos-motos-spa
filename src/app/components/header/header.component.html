@@ -44,7 +44,7 @@
 <div class="navbar-space">
   <div class="navbar-name">
     <div class="container-fluid container-lg">
-      <span class="color-red me-3">{{ this.userName }}</span>
+      <span class="color-red me-3" *ngIf="this.authService.getUserInfo()">{{ this.authService.getUserInfo().name }}</span>
     </div>
   </div>
 </div>

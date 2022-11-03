@@ -22,6 +22,17 @@ ul {
 	width: 100%;
 }
 
+.product-item .image-container {
+	width: 100%;
+	height: 400px;
+	overflow: hidden;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, .25);
+	border-radius: 10px;
+}
+
 .product-item .item-quantity-box {
 	max-width: 100%;
 	display: flex;

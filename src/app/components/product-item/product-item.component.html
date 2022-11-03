@@ -1,10 +1,12 @@
 <div class="product-item white-box-container mt-2">
-  <img
-    *ngIf="!this.product.hasImage"
-    src="./assets/sample-product.PNG"
-    alt=""
-  />
-  <img *ngIf="this.product.hasImage" [src]="this.getImageUrl()" alt="" />
+  <div class="image-container">
+    <img
+      *ngIf="!this.product.hasImage"
+      src="./assets/sample-product.PNG"
+      alt=""
+    />
+    <img *ngIf="this.product.hasImage" [src]="this.getImageUrl()" alt="" />
+  </div>
   <div class="down-content">
     <h3>{{ this.product.title }}</h3>
     <p class="price text-end">{{ this.product.price | currency }}</p>
