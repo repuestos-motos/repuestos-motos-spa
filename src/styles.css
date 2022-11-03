@@ -8,6 +8,12 @@
     user-select: none;
 }
 
+/* colors */
+.color-red {
+    color: #f33f3f;
+}
+
+/* buttons */
 .btn-red {
     background-color: #f33f3f;
     border-color: #f33f3f;

@@ -16,6 +16,7 @@ header .navbar {
 	padding: 17px 0px;
 }
 .navbar-space {
+	position: relative;
     min-height: 80px;
 }
 .background-header .navbar {
@@ -111,4 +112,12 @@ header .navbar {
     .navbar-expand-lg .navbar-collapse {
         justify-content: flex-end;
     }
+}
+
+.navbar-name {
+	position: fixed;
+    width: 100%;
+    z-index: 99999;
+    top: 55px;
+    text-align: end;
 }

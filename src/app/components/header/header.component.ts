@@ -12,8 +12,10 @@ export class HeaderComponent implements AfterViewInit {
   @ViewChild('navBar') navBar: ElementRef;
 
   public showNavbar: boolean = false;
+  public userName: string = '';
 
   constructor(private router: Router, public authService: AuthenticationService) {
+    this.userName = this.authService.getUserInfo().name;
   }
   
   ngAfterViewInit(): void {
