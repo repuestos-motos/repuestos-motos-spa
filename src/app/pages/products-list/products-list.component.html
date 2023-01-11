@@ -24,8 +24,11 @@
   </div>
   <div class="row position-relative mb-3">
     <div class="product-list-spinner" *ngIf="this.blockList"></div>
-    <div *ngFor="let p of this.productList" class="col-lg-4 col-md-4 all des" [ngClass]="{'d-none': this.hideProduct(p)}">
+    <div *ngFor="let p of this.productListOnView" class="col-lg-4 col-md-4 all des" [ngClass]="{'d-none': this.hideProduct(p)}">
       <app-product-item [product]="p"></app-product-item>
+    </div>
+    <div class="col-12 text-center mt-4">
+      <button class="btn btn-red" *ngIf="this.showMoreBtn" (click)="this.addProductsToView()">Cargar mas...</button>
     </div>
   </div>
 </div>

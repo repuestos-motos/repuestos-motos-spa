@@ -16,7 +16,10 @@ import { PreloaderService } from '../../services/preloader.service';
 })
 export class ProductsListComponent implements OnInit {
 
-  public productList: Product[]  = [];
+  private productList: Product[]  = [];
+  private filteredProducts: Product[] = [];
+  public productListOnView: Product[]  = [];
+  public showMoreBtn: boolean = false;
   public productsCategories: Category[] = [];
   public clientList: Client[];
   public selectedClientId: number = -1;
@@ -48,6 +51,12 @@ export class ProductsListComponent implements OnInit {
     }
   }
 
+  addProductsToView() {
+    const fpCount = this.filteredProducts.length;
+    this.productListOnView = this.filteredProducts.slice(0, this.productListOnView.length + 18);
+    this.showMoreBtn = this.productListOnView.length < fpCount;
+  }
+
   setNameFilter() {
     clearTimeout(this.timeOut);
     this.blockList = true;
@@ -73,6 +82,8 @@ export class ProductsListComponent implements OnInit {
           this.productsService.getProducts(this.selectedClientId).subscribe({
             next: p => {
               this.productList = p;
+              this.filteredProducts = JSON.parse(JSON.stringify(p));
+              this.addProductsToView();
               this.preloaderService.unblock();
             }
           }) 
@@ -91,6 +102,8 @@ export class ProductsListComponent implements OnInit {
       ([c, p]) => {
         this.productsCategories = c;
         this.productList = p;
+        this.filteredProducts = JSON.parse(JSON.stringify(p));
+        this.addProductsToView();
       }
     );
   }
@@ -108,6 +121,8 @@ export class ProductsListComponent implements OnInit {
     this.productsService.getProducts(this.selectedClientId).subscribe({
       next: (p: any) => {
         this.productList = p;
+        this.filteredProducts = JSON.parse(JSON.stringify(p));
+        this.addProductsToView();
         this.preloaderService.unblock();
       },
       error: (e: any) => {
@@ -121,7 +136,14 @@ export class ProductsListComponent implements OnInit {
   }
 
   selectCategory(c: Category | null) {
+    this.productListOnView = [];
     this.selectedCategory = c;
+    if (this.selectedCategory) {
+      this.filteredProducts = this.productList.filter(p => p.category === this.selectedCategory?.name);
+    } else {
+      this.filteredProducts = JSON.parse(JSON.stringify(this.productList));
+    }
+    this.addProductsToView();
   }
 
   hideProduct(product: Product) {
