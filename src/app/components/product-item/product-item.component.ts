@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Product } from '../../interface/product';
 import { ApiService } from '../../services/api.service';
 import { CartService } from '../../services/cart.service';
@@ -9,7 +9,7 @@ import { ToastService } from '../../services/toast.service';
   templateUrl: './product-item.component.html',
   styleUrls: ['./product-item.component.css']
 })
-export class ProductItemComponent {
+export class ProductItemComponent implements OnInit {
 
   @Input() product: Product;
   public quantityToAdd: number = 0;
@@ -19,6 +19,10 @@ export class ProductItemComponent {
     private cartService: CartService,
     private toastService: ToastService
   ) { }
+
+  ngOnInit(): void {
+    this.product.quantityAdded = this.cartService.checkQuantityAdded(this.product.productId);
+  }
 
   getImageUrl(): string {
     return this.apiService.getBackendUrl() + 'products/image?productId=' + this.product.productId;

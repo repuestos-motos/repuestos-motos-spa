@@ -85,4 +85,9 @@ export class CartService {
     index >= 0 && this.cartItems.splice(index, 1).length && this.storeCart();
     return this.cartItems;
   }
+
+  checkQuantityAdded(productId: number) {
+    let item = this.cartItems.find(p => p.productId === productId);
+    return item ? item.quantity : 0;
+  }
 }
