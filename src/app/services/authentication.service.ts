@@ -1,8 +1,9 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { map } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, map, Subject } from 'rxjs';
 import { ApiService } from './api.service';
 import { User } from '../interface/user';
 import { Client } from '../interface/client';
+import { LoginInfo } from '../interface/loginInfo';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,18 @@ export class AuthenticationService {
    */
   private _selectedClient: Client | undefined;
 
+  /**
+   * auth subject to emit an event when client login/logout
+   */
+  private _authSubject: BehaviorSubject<LoginInfo>;
+
   constructor(private apiService: ApiService) {
+    this._authSubject = new BehaviorSubject<LoginInfo>(
+      {
+        isAuthenticated: this._isAuthenticated,
+        userInfo: this.getUserInfo()
+      }
+    );
     this.loadStoredUserInformation();
   }
 
@@ -45,6 +57,10 @@ export class AuthenticationService {
       this._userInformation = value.userInformation as User;
       this._selectedClient = value.selectedClient ? value.selectedClient as Client : undefined;
       this._isAuthenticated = this._accessToken ? true : false;
+      this._authSubject.next({
+        isAuthenticated: this._isAuthenticated,
+        userInfo: this.getUserInfo()
+      });
     }
   }
 
@@ -121,6 +137,10 @@ export class AuthenticationService {
     return this._userInformation;
   }
 
+  public getAuthSubject() {
+    return this._authSubject;
+  }
+
   /**
    * Method to call the login endpoint
    * @param userName User name
@@ -152,6 +172,10 @@ export class AuthenticationService {
           this._isAuthenticated = true;
           this._userInformation = response as User;
           this.storeUserInformation();
+          this._authSubject.next({
+            isAuthenticated: this._isAuthenticated,
+            userInfo: this.getUserInfo(),
+          });
           return response;
         })
       );
@@ -159,8 +183,13 @@ export class AuthenticationService {
 
   public logout() {
     this._isAuthenticated = false;
+    this._selectedClient = undefined;
     this.setAccessToken(null);
     this.removeStoredUserInfromation();
+    this._authSubject.next({
+      isAuthenticated: this._isAuthenticated,
+      userInfo: this.getUserInfo(),
+    });
   }
 
   /**

@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-lg">
     <div class="mobile-navbar-background" *ngIf="this.showNavbar" (click)="this.navbarBtnClick()"></div>
-    <div class="container" [ngClass]="{'justify-content-center': !this.authService.isAuthenticated()}">
+    <div class="container" [ngClass]="{'justify-content-center': !this.isAuthenticated}">
       <a class="navbar-brand" href="#"
         ><h2>Moto<em>Landia</em></h2></a
       >
@@ -13,12 +13,12 @@
         aria-controls="navbarNav"
         aria-expanded="false"
         aria-label="Toggle navigation"
-        *ngIf="this.authService.isAuthenticated()"
+        *ngIf="this.isAuthenticated"
         (click)="this.navbarBtnClick()"
       >
         <i class="bi bi-list"></i>
       </button>
-      <div class="collapse navbar-collapse" #navBar id="navbarNav" *ngIf="this.authService.isAuthenticated()">
+      <div class="collapse navbar-collapse" #navBar id="navbarNav" *ngIf="this.isAuthenticated">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['']" (click)="this.navbarBtnClick()">Productos</a>
@@ -44,7 +44,7 @@
 <div class="navbar-space">
   <div class="navbar-name">
     <div class="container-fluid container-lg">
-      <span class="color-red me-3" *ngIf="this.authService.getUserInfo()">{{ this.authService.getUserInfo().name }}</span>
+      <span class="color-red me-3" *ngIf="this.userInfo">{{ this.userInfo.name }}</span>
     </div>
   </div>
 </div>
