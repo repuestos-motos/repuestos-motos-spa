@@ -155,6 +155,10 @@ export class AuthenticationService {
           this._isAuthenticated = true;
           this._userInformation = response as User;
           this.storeUserInformation();
+          this._authSubject.next({
+            isAuthenticated: this._isAuthenticated,
+            userInfo: this.getUserInfo()
+          });
           return response;
         })
       );
